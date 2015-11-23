@@ -26,6 +26,7 @@ import android.media.CamcorderProfile;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 
 import com.jmolsmobile.landscapevideocapture.CLog;
@@ -39,6 +40,11 @@ public class CameraWrapper {
 
     private Camera     mCamera     = null;
     private Parameters mParameters = null;
+    private int        mRotation   = -1;
+
+    public CameraWrapper(int rotation) {
+        mRotation = rotation;
+    }
 
     public Camera getCamera() {
         return mCamera;
@@ -108,7 +114,25 @@ public class CameraWrapper {
     public void configureForPreview(int viewWidth, int viewHeight) {
         final Parameters params = getCameraParametersFromSystem();
         final Size previewSize = getOptimalSize(params.getSupportedPreviewSizes(), viewWidth, viewHeight);
-        params.setPreviewSize(previewSize.width, previewSize.height);
+
+        if (mRotation == Surface.ROTATION_0) {
+            params.setPreviewSize(previewSize.height, previewSize.width);
+            mCamera.setDisplayOrientation(90);
+        }
+
+        if (mRotation == Surface.ROTATION_90) {
+            params.setPreviewSize(previewSize.width, previewSize.height);
+        }
+
+        if (mRotation == Surface.ROTATION_180) {
+            params.setPreviewSize(previewSize.height, previewSize.width);
+        }
+
+        if (mRotation == Surface.ROTATION_270) {
+            params.setPreviewSize(previewSize.width, previewSize.height);
+            mCamera.setDisplayOrientation(180);
+        }
+
         params.setPreviewFormat(ImageFormat.NV21);
         mCamera.setParameters(params);
         CLog.d(CLog.CAMERA, "Preview size: " + previewSize.width + "x" + previewSize.height);
