@@ -115,27 +115,57 @@ public class CameraWrapper {
         final Parameters params = getCameraParametersFromSystem();
         final Size previewSize = getOptimalSize(params.getSupportedPreviewSizes(), viewWidth, viewHeight);
 
-        if (mRotation == Surface.ROTATION_0) {
+        if (mRotation % 180 == 0) {
             params.setPreviewSize(previewSize.height, previewSize.width);
-            mCamera.setDisplayOrientation(90);
-        }
-
-        if (mRotation == Surface.ROTATION_90) {
+        } else {
             params.setPreviewSize(previewSize.width, previewSize.height);
         }
-
-        if (mRotation == Surface.ROTATION_180) {
-            params.setPreviewSize(previewSize.height, previewSize.width);
-        }
-
-        if (mRotation == Surface.ROTATION_270) {
-            params.setPreviewSize(previewSize.width, previewSize.height);
-            mCamera.setDisplayOrientation(180);
-        }
+        mCamera.setDisplayOrientation(getDisplayOrientation());
 
         params.setPreviewFormat(ImageFormat.NV21);
         mCamera.setParameters(params);
         CLog.d(CLog.CAMERA, "Preview size: " + previewSize.width + "x" + previewSize.height);
+    }
+
+    public int getDisplayOrientation() {
+        android.hardware.Camera.CameraInfo camInfo =
+                new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(getBackFacingCameraId(), camInfo);
+
+        int degrees = 0;
+        if (mRotation == Surface.ROTATION_0) {
+            degrees = 0;
+        }
+
+        if (mRotation == Surface.ROTATION_90) {
+            degrees = 90;
+        }
+
+        if (mRotation == Surface.ROTATION_180) {
+            degrees = 180;
+        }
+
+        if (mRotation == Surface.ROTATION_270) {
+            degrees = 270;
+        }
+
+        return (camInfo.orientation - degrees + 360) % 360;
+    }
+
+    private int getBackFacingCameraId() {
+        int cameraId = -1;
+        // Search for the front facing camera
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            Camera.CameraInfo info = new Camera.CameraInfo();
+            Camera.getCameraInfo(i, info);
+            if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+
+                cameraId = i;
+                break;
+            }
+        }
+        return cameraId;
     }
 
     public void enableAutoFocus() {

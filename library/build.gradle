@@ -38,31 +38,3 @@ tasks.coveralls {
     dependsOn 'connectedAndroidTest'
     onlyIf { System.env.'CI' }
 }
-
-
-ext {
-    // Where you will see your artifact in Bintray's web interface
-    // The "bintrayName" should match the name of the Bintray repro.
-    bintrayRepo = 'maven'
-    bintrayName = 'LandscapeVideoCamera'
-
-    // Maven metadata
-    publishedGroupId = 'com.github.jeroenmols'
-    libraryName = 'LandscapeVideoCamera'
-    // Save yourself a head ache, and set this equal to the name of the Android Studio library
-    // module. The artifact name needs to match the name of the library.
-    artifact = 'library'
-
-    libraryDescription = 'Powerful custom Android Camera with granular control over the video quality and filesize, restricting recordings to landscape only.'
-    libraryVersion = '1.1.4'
-
-    developerId = 'JeroenMols'
-    developerName = 'Jeroen Mols'
-    developerEmail = 'jmolsmobile@gmail.com'
-
-    user = 'jmols'
-    apikey = '1a7704b39d7b4c884651c74475abb4fd80e47da3'
-}
-
-apply from: 'https://raw.githubusercontent.com/attwellBrian/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/attwellBrian/JCenter/master/bintrayv1.gradle'

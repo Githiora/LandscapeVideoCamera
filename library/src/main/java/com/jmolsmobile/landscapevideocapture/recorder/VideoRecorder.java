@@ -146,6 +146,7 @@ public class VideoRecorder implements OnInfoListener, CapturePreviewInterface {
         recorder.setProfile(baseProfile);
         recorder.setMaxDuration(mCaptureConfiguration.getMaxCaptureDuration());
         recorder.setOutputFile(mVideoFile.getFullPath());
+        recorder.setOrientationHint(mCameraWrapper.getDisplayOrientation());
 
         try {
             recorder.setMaxFileSize(mCaptureConfiguration.getMaxCaptureFileSize());
