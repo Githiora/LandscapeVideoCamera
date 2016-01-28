@@ -26,6 +26,7 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 
 import com.jmolsmobile.landscapevideocapture.R;
 import com.jmolsmobile.landscapevideocapture.R.id;
@@ -39,6 +40,7 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener {
 	private ImageView					mThumbnailIv;
 
 	private RecordingButtonInterface	mRecordingInterface;
+	private LinearLayout mLinearDclineAccept;
 
 	public VideoCaptureView(Context context) {
 		super(context);
@@ -61,6 +63,7 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener {
 		mRecordBtnIv = (ImageView) videoCapture.findViewById(id.videocapture_recordbtn_iv);
 		mAcceptBtnIv = (ImageView) videoCapture.findViewById(id.videocapture_acceptbtn_iv);
 		mDeclineBtnIv = (ImageView) videoCapture.findViewById(id.videocapture_declinebtn_iv);
+		mLinearDclineAccept = (LinearLayout)videoCapture.findViewById(id.linear_accept_decline);
 
 		mRecordBtnIv.setOnClickListener(this);
 		mAcceptBtnIv.setOnClickListener(this);
@@ -81,8 +84,9 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener {
 	public void updateUINotRecording() {
 		mRecordBtnIv.setSelected(false);
 		mRecordBtnIv.setVisibility(View.VISIBLE);
-		mAcceptBtnIv.setVisibility(View.GONE);
-		mDeclineBtnIv.setVisibility(View.GONE);
+		mLinearDclineAccept.setVisibility(View.GONE);
+		/*mAcceptBtnIv.setVisibility(View.GONE);
+		mDeclineBtnIv.setVisibility(View.GONE);*/
 		mThumbnailIv.setVisibility(View.GONE);
 		mSurfaceView.setVisibility(View.VISIBLE);
 	}
@@ -90,16 +94,18 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener {
 	public void updateUIRecordingOngoing() {
 		mRecordBtnIv.setSelected(true);
 		mRecordBtnIv.setVisibility(View.VISIBLE);
-		mAcceptBtnIv.setVisibility(View.GONE);
-		mDeclineBtnIv.setVisibility(View.GONE);
+		mLinearDclineAccept.setVisibility(View.GONE);
+		/*mAcceptBtnIv.setVisibility(View.GONE);
+		mDeclineBtnIv.setVisibility(View.GONE);*/
 		mThumbnailIv.setVisibility(View.GONE);
 		mSurfaceView.setVisibility(View.VISIBLE);
 	}
 
 	public void updateUIRecordingFinished(Bitmap videoThumbnail) {
 		mRecordBtnIv.setVisibility(View.INVISIBLE);
-		mAcceptBtnIv.setVisibility(View.VISIBLE);
-		mDeclineBtnIv.setVisibility(View.VISIBLE);
+		/*mAcceptBtnIv.setVisibility(View.VISIBLE);
+		mDeclineBtnIv.setVisibility(View.VISIBLE);*/
+		mLinearDclineAccept.setVisibility(View.VISIBLE);
 		mThumbnailIv.setVisibility(View.VISIBLE);
 		mSurfaceView.setVisibility(View.GONE);
 		final Bitmap thumbnail = videoThumbnail;

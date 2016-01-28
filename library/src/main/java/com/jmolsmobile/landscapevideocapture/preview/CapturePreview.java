@@ -34,11 +34,11 @@ public class CapturePreview implements SurfaceHolder.Callback {
 		mInterface = capturePreviewInterface;
 		mCameraWrapper = cameraWrapper;
 
-		initalizeSurfaceHolder(holder);
+		initializeSurfaceHolder(holder);
 	}
 
 	@SuppressWarnings("deprecation")
-	private void initalizeSurfaceHolder(final SurfaceHolder surfaceHolder) {
+	private void initializeSurfaceHolder(final SurfaceHolder surfaceHolder) {
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS); // Necessary for older API's
 	}

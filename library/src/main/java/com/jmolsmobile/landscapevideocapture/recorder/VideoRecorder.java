@@ -47,8 +47,8 @@ public class VideoRecorder implements OnInfoListener, CapturePreviewInterface {
     private boolean mRecording = false;
     private final VideoRecorderInterface mRecorderInterface;
 
-    public VideoRecorder(VideoRecorderInterface recorderInterface, CaptureConfiguration captureConfiguration, VideoFile videoFile,
-                         CameraWrapper cameraWrapper, SurfaceHolder previewHolder) {
+    public VideoRecorder(VideoRecorderInterface recorderInterface, CaptureConfiguration captureConfiguration,
+                         VideoFile videoFile, CameraWrapper cameraWrapper, SurfaceHolder previewHolder) {
         mCaptureConfiguration = captureConfiguration;
         mRecorderInterface = recorderInterface;
         mVideoFile = videoFile;

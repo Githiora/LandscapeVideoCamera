@@ -60,12 +60,12 @@ public class VideoCaptureActivity extends Activity implements RecordingButtonInt
         CLog.toggleLogging(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_videocapture);
+        setContentView(R.layout.activity_videocapture_portrait);
 
         initializeCaptureConfiguration(savedInstanceState);
 
         mVideoCaptureView = (VideoCaptureView) findViewById(R.id.videocapture_videocaptureview_vcv);
-        if (mVideoCaptureView == null) return; // Wrong orientation
+//        if (mVideoCaptureView == null) return; // Wrong orientation
 
         initializeRecordingUI();
     }
@@ -78,7 +78,8 @@ public class VideoCaptureActivity extends Activity implements RecordingButtonInt
 
     private void initializeRecordingUI() {
         Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-        mVideoRecorder = new VideoRecorder(this, mCaptureConfiguration, mVideoFile, new CameraWrapper(new NativeCamera(), display.getRotation()),
+        mVideoRecorder = new VideoRecorder(this, mCaptureConfiguration, mVideoFile,
+                new CameraWrapper(new NativeCamera(), display.getRotation()),
                 mVideoCaptureView.getPreviewSurfaceHolder());
         mVideoCaptureView.setRecordingButtonInterface(this);
 
